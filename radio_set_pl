@@ -1,0 +1,5 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_ctcss_tone $1" | gve
+#nrig <<< "\get_ctcss_tone" 

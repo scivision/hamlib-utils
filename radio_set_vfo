@@ -1,0 +1,4 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_vfo $1" | gve

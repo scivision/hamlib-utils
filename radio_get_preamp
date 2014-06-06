@@ -1,0 +1,4 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\get_level PREAMP"

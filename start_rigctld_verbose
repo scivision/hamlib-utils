@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "this will NOT work with Gpredict due to verbose"
+
+rigctld --model=214 --rig-file=/dev/ttyS0 --serial-speed=57600 -C serial_handshake=Hardware,post_write_delay=10,retry=1 -vvvvv &
+
+#rotctld --model=603 --rot-file=/dev/ttyS5 --serial-speed=9600 -C post_write_delay=50,timeout=15000,retry=0 &
+
+#gpredict &

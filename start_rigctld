@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rigctld --model=214 --rig-file=/dev/ttyS0 --serial-speed=57600 --ptt-type=RIG --port=4532 -C serial_handshake=Hardware,post_write_delay=10,retry=1 &

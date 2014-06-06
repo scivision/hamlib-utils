@@ -1,0 +1,4 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_func NR $1" | gve

@@ -1,0 +1,6 @@
+#!/bin/bash
+# michael hirsch
+
+echo "may only come through local radio speaker??"
+
+nrig <<< "\send_morse $1"

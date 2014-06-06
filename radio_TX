@@ -1,0 +1,9 @@
+#!/bin/bash
+# michael hirsch
+
+echo "setting transmitter on $(radio_get_freq) for 1 second"
+
+nrig <<< "\set_ptt 1" | gve
+sleep 1;
+nrig <<< "\set_ptt 0" | gve
+nrig <<< "\get_ptt"

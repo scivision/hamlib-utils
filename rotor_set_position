@@ -1,0 +1,10 @@
+#!/bin/bash
+# michael hirsch
+
+#for some maddening reason I must tell it model 602 (GS232) for set position,
+# and model 603 (GS232B) for get position
+#RotOpts="--model=603 --rot-file=/dev/ttyS5 --serial-speed=9600 -C serial_handshake=Hardware,post_write_delay=10,timeout=1000,retry=0"
+#rotctl $RotOpts set_pos $1 $2
+
+# using rotctld daemon
+nrot <<< "\set_pos $1 $2"

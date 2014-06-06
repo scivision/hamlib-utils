@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# finds rigctl and rotctl PIDs and SIGTERMs them
+# Michael Hirsch
+
+RigPID=$(pgrep rigctld)
+RotPID=$(pgrep rotctld)
+
+if [[ -n $RigPID ]]; then
+echo "Stopping rigctld PID $RigPID"
+kill $RigPID
+fi
+
+if [[ -n $RotPID ]]; then
+echo "Stopping rotctld PID $RotPID"
+kill $RotPID
+fi

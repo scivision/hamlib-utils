@@ -1,0 +1,6 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_level ATT $1" | gve
+
+#nrig <<< "\get_level ATT"

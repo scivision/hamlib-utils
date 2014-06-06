@@ -1,0 +1,103 @@
+#!/bin/bash
+shopt -s expand_aliases  #tells bash to pickup any new aliases defined in this script
+# by Michael Hirsch, Dec 2013
+# This program polls RSSI over a range of frequencies in FreqListHz, at one position
+
+# notes:
+# 1) the | grep -v "RPRT 0" discards non-error text that would otherwise be logged by crontab to email
+
+######### user parameters ###########################
+# let's try every 10kHz from 435MHz to 438MHz
+StartFreqHz=435000000
+StopFreqHz=438000000
+IncrFreqHz=10000
+### define helper functions #############
+alias gve='grep -v -e "RPRT 0"'
+########### main program #################
+
+# stop program on error
+#set -e
+
+StartTime=$(date "+%FT%T")
+LogFile="$HOME/RSSIlog/FreqSweep_$StartTime.RSSIlog"
+
+#setup freq list
+FreqListHz=($(seq $StartFreqHz $IncrFreqHz $StopFreqHz))
+NumFreq=${#FreqListHz[@]}
+if [ -z "$IsCron" ]; then echo "Logging $NumFreq freqs from $StartFreqHz Hz to $StopFreqHz Hz to $LogFile"; fi
+
+# netcat-openbsd options (no -c, use -q 0 instead)
+ncl="-q 0 -w 1 localhost 4532"
+
+
+# rigctld options
+RigOpts="--model=214 --rig-file=/dev/ttyS0 --serial-speed=57600 -C serial_handshake=Hardware,post_write_delay=10,retry=1"
+
+#to tell rigctl to connect to the already running rigctld daemon
+RigL="--model=2 --rig-file=localhost:4532"
+# using rigctl makes a lot of extraneous \dump_state calls that I don't like. Trying nc instead.
+
+# rotctld options
+RotOpts="--model=603 --rot-file=/dev/ttyS5 --serial-speed=9600 -C serial_handshake=Hardware,post_write_delay=50,timeout=2000,retry=1"
+
+### open daemons IF NOT ALREADY OPEN, forking into background #####
+if [[ -z $(netstat -lnt | grep 4532) ]]; then
+  echo "Starting Rigctl daemon"
+  rigctld $RigOpts &
+  sleep 2; #give rigctld a chance to startup
+  RigDProcID=$(pgrep rigctld)
+  echo "Using new instance of rigctld, process ID $RigDProcID"
+else
+  RigDProcID=$(pgrep rigctld)
+  if [ -z "$IsCron" ]; then echo "Using already running rigctld of process ID $RigDProcID"; fi
+fi
+###################################################################
+#echo "Reading rig and rotor parameters, storing in $LogFile"
+# turn off TS-2000 attenuator
+nc $ncl <<< "\set_level ATT 0" | gve
+StartAtt=$(nc $ncl <<< "\get_level ATT")
+
+# turn on TS-2000 INTERNAL preamp
+nc $ncl <<< "\set_level PREAMP 20" | gve
+StartPreamp=$(nc $ncl <<< "\get_level PREAMP")
+
+# set TS-2000 modulation
+nc $ncl <<< "\set_mode FM 0" | gve
+StartMode=$(nc $ncl <<< "\get_mode")
+StartMode=$(tr '\r\n' ' ' <<<$StartMode) #puts space in for newline
+
+# read az/el from rotor
+AzEl=$(rotctl $RotOpts get_pos)
+AzEl=$(tr '\r\n' ' ' <<<$AzEl) # puts space in for newline
+
+## write initial settings to file
+echo "FrequencyStopStartIncr(Hz), $StartFreqHz $StopFreqHz $IncrFreqHz">>$LogFile
+echo "Mode/Bandwidth(Hz), $StartMode">>$LogFile
+echo "Attenuation(dB), $StartAtt">>$LogFile
+echo "InternalPreamp(dB), $StartPreamp">>$LogFile
+echo "Azimuth/Elevation(deg), $AzEl">>$LogFile
+echo " ">>$LogFile
+echo "UTC Time            Freq (Hz) RSSI">>$LogFile
+echo "------------------- --------- ----">>$LogFile
+if [ -z "$IsCron" ]; then echo "press <ctrl> c to end this program"; fi
+#################### start Loop ###################
+#for iter in {1..5..1}; do
+  for freqHz in "${FreqListHz[@]}"
+  do
+	# set frequency of radio
+	nc $ncl <<< "\set_freq $freqHz" | gve
+	# read frequency from radio (to confirm setting)
+	readFreqHz=$(nc $ncl <<< "\get_freq")
+
+	# read RSSI from radio
+	Rssi=$(nc $ncl <<< "\get_level STRENGTH")
+
+	# get current time
+	Now=$(date "+%FT%T")
+
+	# write to logfile
+	LogString="$Now $readFreqHz $Rssi"
+	echo "$LogString" >> $LogFile
+
+  done #for freqListHz
+#done #for iter 1 to 5

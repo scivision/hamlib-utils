@@ -1,0 +1,7 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_mode USB 0" | gve
+nrig <<< "\get_mode"
+
+# bandwidth setting not working??

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+start_rigctld
+
+start_rotctld
+
+echo "Started rigctld PID $(pgrep rigctld)"
+echo "Started rotctld PID $(pgrep rotctld)"
+

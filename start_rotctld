@@ -1,0 +1,3 @@
+#!/bin/bash
+
+rotctld --model=603 --rot-file=/dev/ttyS5 --serial-speed=9600 -C serial_handshake=Hardware,post_write_delay=10,timeout=1000,retry=0 &

@@ -1,0 +1,5 @@
+#!/bin/bash
+# michael hirsch
+# uses daemon now
+
+nrig <<< "\get_level STRENGTH"

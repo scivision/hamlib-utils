@@ -1,0 +1,5 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_freq $1" | gve
+#nrig <<< "\get_freq"

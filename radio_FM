@@ -1,0 +1,5 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_mode FM 0" | gve
+nrig <<< "\get_mode"

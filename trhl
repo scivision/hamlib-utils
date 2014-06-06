@@ -1,0 +1,6 @@
+#!/bin/bash
+# Michael Hirsch
+
+
+# replaces Linux EOL with space
+tr '\r\n' ' '

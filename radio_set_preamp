@@ -1,0 +1,5 @@
+#!/bin/bash
+# michael hirsch
+
+nrig <<< "\set_level PREAMP $1" | gve
+#nrig <<< "\get_level PREAMP"

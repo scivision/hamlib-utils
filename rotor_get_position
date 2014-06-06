@@ -1,0 +1,8 @@
+#!/bin/bash
+# michael hirsch
+
+#RotOpts="--model=603 --rot-file=/dev/ttyS5 --serial-speed=9600 -C serial_handshake=Hardware,post_write_delay=10,timeout=1000,retry=1"
+#rotctl $RotOpts get_pos | tr '\r\n' ' '
+
+# daemon
+nrot <<< "\get_pos" | trhl
