@@ -6,12 +6,6 @@
 RigPID=$(pgrep rigctld)
 RotPID=$(pgrep rotctld)
 
-if [[ -n $RigPID ]]; then
-echo "Stopping rigctld PID $RigPID"
-kill $RigPID
-fi
+[[ -n $RigPID ]] && { echo "Stopping rigctld PID $RigPID"; kill $RigPID; }
 
-if [[ -n $RotPID ]]; then
-echo "Stopping rotctld PID $RotPID"
-kill $RotPID
-fi
+[[ -n $RotPID ]] && { echo "Stopping rotctld PID $RotPID"; kill $RotPID; }
