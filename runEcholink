@@ -1,3 +1,6 @@
 #!/bin/bash
 
+# assuming you've installed Echolink via WINE in the standard directory, you can start it up. 
+# Most useful when you've previously setup Echolink for Sysop Mode.
+
 wine "$HOME/.wine/drive_c/Program Files (x86)/K1RFD/EchoLink/Echolink.exe" &
