@@ -8,7 +8,7 @@ pollRSSIfreq2.sh allows using your Kenwood TS-2000 as a poor man's spectrum anal
 
 Prereqs
 =======
-Linux -- should work on Cygwin, I haven't tried it.
+Linux -- may work on Cygwin, I haven't tried it.
 
 Bash  -- These days, it's the default Terminal shell on most Linux distros and Cygwin
 
