@@ -9,8 +9,11 @@ pollRSSIfreq2.sh allows using your Kenwood TS-2000 as a poor man's spectrum anal
 Prereqs
 =======
 Linux -- should work on Cygwin, I haven't tried it.
+
 Bash  -- These days, it's the default Terminal shell on most Linux distros and Cygwin
+
 Netcat  ``sudo apt-get install netcat``
+
 hamlib ``sudo apt-get install libhamlib-utils``
 
 How to use hamlib for simple remote radio control
