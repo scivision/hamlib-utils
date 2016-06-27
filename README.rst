@@ -50,6 +50,11 @@ If you want to stop the rigctld daemon when you're done for the day (don't have 
 
 Notes
 =====
-if you get ``RPRT -5`` that means that the radio didn't accept your command. For the Kenwood TS-2000,
+1. if you get ``RPRT -5`` that means that the radio didn't accept your command. For the Kenwood TS-2000,
 you can try to repair this by stopping rigctld, connction with Putty and type several semicolon (withOUT pressing return)
 The radio should then start responsing to rigctld after restarting rigctld
+
+2. If using a radio with hardware handshake capability e.g. TS-2000 try adding
+option ``-C serial_handshake=Hardware`` to the rigctl command e.g.::
+
+    rigctl -m 214 -s 57600 -r COM1 -C serial_handshake=Hardware
