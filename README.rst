@@ -8,19 +8,18 @@ pollRSSIfreq2.sh allows using your Kenwood TS-2000 as a poor man's spectrum anal
 
 Prereqs
 =======
-Linux -- may work on Cygwin, I haven't tried it.
+::
 
-Bash  -- These days, it's the default Terminal shell on most Linux distros and Cygwin
-
-Netcat  ``sudo apt-get install netcat``
-
-hamlib ``sudo apt-get install libhamlib-utils``
+    apt-get install netcat libhamlib-utils
 
 How to use hamlib for simple remote radio control
 ==============================================================
 I wanted the simplest possible command-line interface to my Kenwood TS-2000 (or other hamlib controllable rig, with minor modifications). 
 I startup the ``rigctld`` daemon and then issue commands using netcat to the open port.
-OBVIOUSLY this port should not be open to the Internet! You must be using a firewall such as ufw ``sudo ufw enable``.
+OBVIOUSLY this port should not be open to the Internet! 
+You must be using a firewall such as ufw::
+    
+    sudo ufw enable
 
 First you start the rigctld, using the parameters specific to your rig (here a Kenwood TS-2000)::
   
@@ -35,7 +34,7 @@ Tab completion is your friend.
   
 How to use hamlib for simple remote ROTOR control
 =================================================
-This code is at your own risk, I use it for az/el pointing with a Yaseu G5500 rotor.::
+This code is at your own risk, I use it for az/el pointing with a Yaseu G5500 rotor::
 
   start_rotctld
 

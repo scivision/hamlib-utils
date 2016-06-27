@@ -1,4 +1,4 @@
-#!/bin/bash
-# michael hirsch
+#!/bin/sh
 # connects to existing rotctld daemon
+
 nc -w 1 -q 0 localhost 4533
