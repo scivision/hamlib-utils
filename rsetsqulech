@@ -1,0 +1,4 @@
+#!/bin/bash
+
+nrig <<< "\set_level SQL $1" | gve
+
