@@ -1,0 +1,4 @@
+#!/bin/bash
+
+nrig <<< "\get_level SQL"
+
